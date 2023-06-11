@@ -137,7 +137,7 @@ DATABASES = {
         'NAME': 'kkhugit',#db명
         'USER': 'root', #db user 이름
         'PASSWORD': 'root', #db password
-        'HOST': '13.124.48.227', #나중에 aws로 연결
+        'HOST': '13.125.141.67', #나중에 aws로 연결
         'PORT': '3306', #mysql 포트번호
     }
 }
