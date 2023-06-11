@@ -123,7 +123,7 @@ WSGI_APPLICATION = 'dropbox.wsgi.application'
 
 
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',  # Replace with your frontend URL
+    'http://13.124.80.175'
 ]
 
 # Database
