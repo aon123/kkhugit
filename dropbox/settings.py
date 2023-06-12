@@ -123,7 +123,6 @@ WSGI_APPLICATION = 'dropbox.wsgi.application'
 
 
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',
     'http://13.124.80.175'
 ]
 
@@ -138,7 +137,7 @@ DATABASES = {
         'NAME': 'kkhugit',#db명
         'USER': 'root', #db user 이름
         'PASSWORD': 'root', #db password
-        'HOST': '127.0.0.1', #나중에 aws로 연결
+        'HOST': '43.200.7.82', #나중에 aws로 연결
         'PORT': '3306', #mysql 포트번호
     }
 }
