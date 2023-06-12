@@ -18,6 +18,7 @@ class Files(models.Model):
     shared_with = models.ManyToManyField(User, related_name='shared_files')
     user_id = models.ForeignKey(User, to_field = 'id', on_delete=models.CASCADE, db_column="user_id_id")
     memo = models.TextField(null=True)
+    folder_id = models.CharField(max_length=255, default="Home")
     version = models.IntegerField(default=1)
     removed = models.BooleanField(default=False)
     s3key = models.CharField(max_length=255, null=True)
@@ -62,5 +63,15 @@ class Files(models.Model):
     class Meta:
         managed = True
         db_table = "files"
+
+
+class Folders(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    name = models.CharField(max_length=255)
+    user_id = models.ForeignKey(User, to_field = 'id', on_delete=models.CASCADE, db_column="user_id_id")
+
+    class Meta:
+        managed = True
+        db_table = "folders"
 
 

@@ -5,6 +5,8 @@ from .views import *
 
 urlpatterns = [
     path('upload/', FileUploadView.as_view(), name="file-upload"),
+    path('create/folder/', CreateFolder.as_view(), name="folder-create"),
+    path('folders/', FolderList.as_view(), name="folder-list"),
     path('download/<int:file_id>/', FileDownloadView.as_view(), name='file-download'),
 
     # path('files/', FileListView.as_view(), name='file-show'),

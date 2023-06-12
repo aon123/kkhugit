@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Files
+from .models import Files, Folders
 from django.utils import timezone
 import os
 
@@ -88,3 +88,18 @@ class MemoSerializer(serializers.ModelSerializer):
         instance.memo = ""
         return instance
 '''
+
+
+class FolderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Folders
+        fields = ('id', 'name', 'user_id')
+        read_only_fields = ('id',)
+
+        def validate(self, attrs):
+            user = self.context['request'].user
+
+            if user != attrs['user']:
+                raise serializers.ValidationError("You don't have permission to delete this file.")
+
+            return attrs

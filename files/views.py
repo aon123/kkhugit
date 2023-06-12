@@ -41,6 +41,7 @@ class FileUploadView(APIView):
             s3_client.upload_fileobj(file, s3_bucket_name, s3_name)
             s3_url =  f"https://{s3_bucket_name}.s3.amazonaws.com/{s3_name}"
             serializer.validated_data['s3key'] = s3_url
+            serializer.validated_data['folder_id'] = request.data['folder_id']
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
@@ -296,3 +297,33 @@ class SharedList(APIView):
         files = Files.objects.filter(shared_with=request.user).order_by('id')
         serializers = FilesSerializer(files, many=True)
         return Response(serializers.data, status=status.HTTP_200_OK)
+    
+
+
+class CreateFolder(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        data = request.data.copy()
+        data['user_id'] = request.user.id
+        
+        serializer = FolderSerializer(data=data, context={'request': request})
+        
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+
+        
+class FolderList(APIView):
+    permission_classes = [IsAuthenticated]
+
+    serializer_class = FolderSerializer
+    # 파일을 정렬해서 보여주는 메소드
+    def get(self, request):
+        files = Folders.objects.filter(user_id=request.user.id).order_by('id')
+        serializers = FolderSerializer(files, many=True)
+        return Response(serializers.data, status=status.HTTP_200_OK)
+    
